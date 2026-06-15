@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Horas Sociales e Institucionales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen font-sans text-gray-800" style="background: linear-gradient(90deg, #3b82f6 0%, #dbeafe 15%, #ffffff 40%); background-attachment: fixed;">
+
+    <!-- VISTA DE LOGIN -->
+    <div id="vista-login" class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-blue-100/50 shadow-blue-900/5">
+            <div class="flex justify-center mb-4">
+                <div class="bg-blue-600 p-3 rounded-xl shadow-md shadow-blue-600/20">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </div>
+            </div>
+            <h2 class="text-3xl font-black mb-2 text-center text-gray-900 tracking-tight">Control de Horas</h2>
+            <p class="text-gray-500 text-center text-sm mb-6">Ingresa al panel administrativo</p>
+            
+            <form id="form-login" class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Usuario</label>
+                    <input type="text" id="login-usuario" required class="block w-full rounded-xl bg-gray-50 border border-gray-300 text-gray-900 p-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-inner">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Contraseña</label>
+                    <input type="password" id="login-password" required class="block w-full rounded-xl bg-gray-50 border border-gray-300 text-gray-900 p-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-inner">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white font-black p-3 rounded-xl hover:bg-blue-700 active:scale-95 transition-all shadow-lg shadow-blue-600/30 mt-2">Ingresar al Sistema</button>
+            </form>
+            <p id="login-error" class="text-red-600 text-sm mt-4 text-center bg-red-500/10 border border-red-500/20 p-2 rounded-xl hidden"></p>
+        </div>
+    </div>
+
+    <!-- VISTA PRINCIPAL DEL PANEL (DASHBOARD) -->
+    <div id="vista-dashboard" class="hidden container mx-auto p-4 max-w-7xl">
+        <!-- HEADER -->
+        <header class="bg-white/95 backdrop-blur-md p-5 rounded-2xl shadow-md mb-6 flex justify-between items-center border border-blue-100/50">
+            <div>
+                <h1 class="text-2xl font-black text-gray-900 tracking-tight">Sistema de Horas <span class="text-blue-600">Sociales</span></h1>
+<p class="text-xs text-gray-500 mt-1">Sesión: <span id="user-display" class="font-bold text-blue-600"></span> (<span id="role-display" class="italic text-yellow-600 font-semibold"></span>) <span class="ml-2 text-gray-400">| Último ingreso: <span id="conexion-display" class="font-semibold text-gray-600"></span></span></p>
+
+            </div>
+            <button id="btn-logout" class="bg-gray-100 hover:bg-red-600 text-gray-700 hover:text-white font-bold px-4 py-2 rounded-xl transition-all duration-200 text-sm border border-gray-300 hover:border-red-600 shadow-sm">Cerrar Sesión</button>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- MÓDULO DE GESTIÓN -->
+            <div id="modulo-gestion" class="lg:col-span-1 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-md border border-blue-100/50 h-fit hidden">
+                <h3 id="titulo-form-gestion" class="text-lg font-black mb-5 text-gray-900 border-b border-gray-100 pb-2 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Agregar Registro de Horas
+                </h3>
+                <form id="form-registro" class="space-y-4">
+                    <input type="hidden" id="reg-id">
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2 tracking-wider">ID Estudiante</label>
+                        <input type="text" id="reg-estudiante" required class="block w-full rounded-xl bg-gray-50 border border-gray-300 text-gray-900 p-3 text-sm focus:outline-none focus:border-blue-500 transition-all shadow-inner">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2 tracking-wider">Tipo de Horas</label>
+                        <select id="reg-tipo" required class="block w-full rounded-xl bg-gray-50 border border-gray-300 text-gray-900 p-3 text-sm focus:outline-none focus:border-blue-500 transition-all">
+                            <option value="1">Horas Sociales</option>
+                            <option value="2">Horas Institucionales</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2 tracking-wider">Número de Horas</label>
+                        <input type="number" id="reg-cantidad" required min="1" class="block w-full rounded-xl bg-gray-50 border border-gray-300 text-gray-900 p-3 text-sm focus:outline-none focus:border-blue-500 transition-all shadow-inner">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2 tracking-wider">Descripción</label>
+                        <textarea id="reg-descripcion" required class="block w-full rounded-xl bg-gray-50 border border-gray-300 text-gray-900 p-3 text-sm focus:outline-none focus:border-blue-500 transition-all shadow-inner" rows="3" placeholder="Detalles de la actividad..."></textarea>
+                    </div>
+                    
+                    <div class="flex space-x-3 pt-2">
+                        <button type="submit" id="btn-guardar" class="w-full bg-blue-600 text-white font-black p-3 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-600/20 active:scale-95 transition-all text-sm">Guardar</button>
+                        <button type="button" id="btn-cancelar" class="w-full bg-gray-200 text-gray-600 font-bold p-3 rounded-xl hover:bg-gray-300 border border-gray-300 active:scale-95 transition-all text-sm hidden">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- MÓDULO DE BÚSQUEDA Y TABLA -->
+            <div id="modulo-busqueda" class="lg:col-span-2 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-md border border-blue-100/50 w-full">
+                <h3 class="text-lg font-black mb-5 text-gray-900 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    Historial de Horas Registradas
+                </h3>
+                
+                <div class="flex mb-5 space-x-3">
+                    <input type="text" id="input-buscar" placeholder="Buscar por ID de Estudiante..." class="flex-1 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-all placeholder-gray-400 shadow-inner">
+                    <button id="btn-buscar" class="bg-blue-600 text-white px-5 rounded-xl hover:bg-blue-700 active:scale-95 transition-all font-bold text-sm shadow-md shadow-blue-500/10">Buscar</button>
+                    <button id="btn-limpiar" class="bg-gray-100 text-gray-700 px-5 rounded-xl hover:bg-gray-200 border border-gray-300 active:scale-95 transition-all text-sm font-bold">Ver Todos</button>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-gray-200 bg-gray-50">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-100/80">
+                            <tr>
+                                <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Estudiante</th>
+                                <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Curso / Nivel</th>
+                                <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Tipo</th>
+                                <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Horas</th>
+                                <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Descripción</th>
+                                <th id="th-acciones" class="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider hidden">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-cuerpo" class="divide-y divide-gray-200 bg-white">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURACIÓN DE SUPABASE ---
+        const SUPABASE_URL = "https://roygxtdhhtjjvvtmgwmp.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_h7Eah3tJSIxM0MpsFs3bAg_aXE_GdRB"; 
+
+        const headers = {
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation"
+        };
+
+        // --- 2. ESTADO DE LA APLICACIÓN ---
+       let usuarioActual = null;
+        let idRolActual = null;
+        let nombreRolActual = "";
+        let idEstudianteAsociado = null; // 🆕 Guarda el ID si el usuario es un estudiante
+
+        const mapeoRoles = {
+            1: "Administrador",
+            2: "Docente",
+            3: "Estudiante"
+        };
+
+        // --- 3. ELEMENTOS DEL DOM ---
+        const vistaLogin = document.getElementById('vista-login');
+        const vistaDashboard = document.getElementById('vista-dashboard');
+        const formLogin = document.getElementById('form-login');
+        const loginError = document.getElementById('login-error');
+        
+        const moduloGestion = document.getElementById('modulo-gestion');
+        const moduloBusqueda = document.getElementById('modulo-busqueda');
+        const thAcciones = document.getElementById('th-acciones');
+        
+        const userDisplay = document.getElementById('user-display');
+        const roleDisplay = document.getElementById('role-display');
+        const btnLogout = document.getElementById('btn-logout');
+        
+        const formRegistro = document.getElementById('form-registro');
+        const tablaCuerpo = document.getElementById('tabla-cuerpo');
+        const inputBuscar = document.getElementById('input-buscar');
+        const btnBuscar = document.getElementById('btn-buscar');
+        const btnLimpiar = document.getElementById('btn-limpiar');
+
+        let url = "";
+        let method = "";
+
+        // --- 4. CONTROL DE ACCESO (LOGIN) ---
+        formLogin.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const usuarioInput = document.getElementById('login-usuario').value;
+            const passInput = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/usuarios?usuario=eq.${usuarioInput}&password=eq.${passInput}`, {
+                    method: 'GET',
+                    headers: headers
+                });
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    const usuarioLogueado = data[0];
+                    
+                    usuarioActual = usuarioLogueado.usuario;
+                    idRolActual = parseInt(usuarioLogueado.id_rol);
+                    nombreRolActual = mapeoRoles[idRolActual] || "Desconocido";
+                    
+                    // 🆕 Captura el id_estudiante asignado en Supabase
+                    idEstudianteAsociado = usuarioLogueado.id_estudiante; 
+                    
+                    const idUsuario = usuarioLogueado.id_usuario; 
+                    await fetch(`${SUPABASE_URL}/rest/v1/usuarios?id_usuario=eq.${idUsuario}`, {
+                        method: 'PATCH',
+                        headers: headers,
+                        body: JSON.stringify({
+                            ultima_conexion: new Date().toISOString()
+                        })
+                    });
+
+                    loginError.classList.add('hidden');
+                    formLogin.reset();
+                    inicializarDashboard();
+                } else {
+                    loginError.textContent = "Usuario o contraseña incorrectos.";
+                    loginError.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error en la conexión:", error);
+                loginError.textContent = "Error al conectar con el servidor.";
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        btnLogout.addEventListener('click', () => {
+            usuarioActual = null;
+            idRolActual = null;
+            idEstudianteAsociado = null;
+            vistaDashboard.classList.add('hidden');
+            vistaLogin.classList.remove('hidden');
+        });
+
+        // --- 5. CONFIGURACIÓN DEL DASHBOARD SEGÚN ROL ---
+        function inicializarDashboard() {
+            vistaLogin.classList.add('hidden');
+            vistaDashboard.classList.remove('hidden');
+            
+            userDisplay.textContent = usuarioActual;
+            roleDisplay.textContent = nombreRolActual;
+
+            const campoConexion = document.getElementById('conexion-display');
+            if (campoConexion) {
+                campoConexion.textContent = new Date().toLocaleString();
+            }
+
+            // Si es Administrador (1) o Docente (2)
+            if (idRolActual === 1 || idRolActual === 2) {
+                moduloGestion.classList.remove('hidden');
+                thAcciones.classList.remove('hidden');
+                moduloBusqueda.classList.remove('lg:col-span-3');
+                moduloBusqueda.classList.add('lg:col-span-2');
+                
+                // Los profesores sí pueden usar el buscador libremente
+                inputBuscar.disabled = false;
+                inputBuscar.value = '';
+                btnBuscar.classList.remove('hidden');
+                btnLimpiar.classList.remove('hidden');
+                
+              tablaCuerpo.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">Ingrese el ID de un estudiante en el buscador para ver sus registros.</td></tr>`;
+            } else {
+                // 🔐 SEGURIDAD: Si es Estudiante (Rol 3)
+                moduloGestion.classList.add('hidden');
+                thAcciones.classList.add('hidden');
+                moduloBusqueda.classList.remove('lg:col-span-2');
+                moduloBusqueda.classList.add('lg:col-span-3');
+                
+                // Congela la caja de búsqueda con SU propio ID
+                inputBuscar.value = idEstudianteAsociado || '';
+                inputBuscar.disabled = true; 
+                
+                // Oculta los botones para que no intente consultar a otros
+                btnBuscar.classList.add('hidden');
+                btnLimpiar.classList.add('hidden');
+                
+                // Carga de forma obligatoria estrictamente sus horas
+                cargarRegistros(idEstudianteAsociado); 
+            }
+        }
+
+
+        // --- 6. OPERACIONES DE LA BASE DE DATOS (API REST) ---
+
+        // Obtener y mostrar registros (Búsqueda)
+                // Obtener y mostrar registros (Búsqueda)
+        async function cargarRegistros(filtroEstudiante = '') {
+            let url = `${SUPABASE_URL}/rest/v1/horas?select=*,estudiantes(nombre,curso,nivel_escolar),tipo_horas(tipo_horas)`;
+            
+            if (filtroEstudiante) {
+                url += `&id_estudiante=eq.${filtroEstudiante}`;
+            }
+
+            try {
+                const response = await fetch(url, { method: 'GET', headers: headers });
+                const data = await response.json();
+                
+                if (data.error || !Array.isArray(data)) {
+                    console.error("Error de Supabase:", data);
+                    tablaCuerpo.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-red-500">Error en la base de datos</td></tr>`;
+                    return;
+                }
+                
+                renderTabla(data);
+            } catch (error) {
+                console.error("Error cargando registros:", error);
+            }
+        }
+        async function eliminarRegistro(id) {
+        if (!confirm("¿Está seguro de que desea eliminar este registro de horas?")) return;
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/horas?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: headers
+            });
+            if (response.ok) {
+                cargarRegistros();
+            } else {
+                alert("No se pudo eliminar el registro de la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al eliminar:", error);
+        }
+    }
+
+        function renderTabla(registros) {
+            tablaCuerpo.innerHTML = '';
+            if (registros.length === 0) {
+                tablaCuerpo.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">No se encontraron registros.</td></tr>`;
+                return;
+            }
+
+            registros.forEach(reg => {
+                const fila = document.createElement('tr');
+                
+                const nombreEstudiante = reg.estudiantes ? reg.estudiantes.nombre : `ID: ${reg.id_estudiante}`;
+                const infoCurso = reg.estudiantes ? `${reg.estudiantes.curso} - ${reg.estudiantes.nivel_escolar}` : 'N/A';
+                
+                // CORREGIDO: Usamos reg.id_tipo en vez de id_tipo suelto
+                const tipoHoraStr = reg.tipo_horas ? reg.tipo_horas.tipo_horas : `ID: ${reg.id_tipo}`;
+                const fechaFormateada = reg.fecha_hora ? new Date(reg.fecha_hora).toLocaleDateString() : 'S/F';
+
+                let accionesHTML = '';
+                
+                if (idRolActual === 1 || idRolActual === 2) {
+                    let botonEliminar = '';
+                    if (idRolActual === 1) {
+                        botonEliminar = `<button onclick="eliminarRegistro(${reg.id})" class="text-red-600 hover:text-red-900">Eliminar</button>`;
+                    }
+                    
+                    accionesHTML = `
+                        <td class="px-4 py-2 text-xs space-x-2">
+                            <button onclick="prepararEditar(${JSON.stringify(reg).replace(/"/g, '&quot;')})" class="text-blue-600 hover:text-blue-900 font-semibold">Editar</button>
+                            ${botonEliminar}
+                        </td>
+                    `;
+                }
+
+                fila.innerHTML = `
+                    <td class="px-4 py-2 font-medium text-gray-900">${nombreEstudiante}</td>
+                    <td class="px-4 py-2 text-gray-600">${infoCurso}</td>
+                    <td class="px-4 py-2 text-gray-600">${tipoHoraStr}</td>
+                    <td class="px-4 py-2 text-gray-700 font-bold">${reg.numero_horas} h</td>
+                    <td class="px-4 py-2 text-gray-500">${fechaFormateada}</td>
+                    <td class="px-4 py-2 text-gray-600 max-w-xs truncate">${reg.descripcion}</td>
+                    ${accionesHTML}
+                `;
+                tablaCuerpo.appendChild(fila);
+            });
+        }
+
+               // Guardar o Modificar Registro (Administrador y Docente)
+        formRegistro.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (idRolActual !== 1 && idRolActual !== 2) return;
+
+            const id = document.getElementById('reg-id').value;
+            const id_estudiante = document.getElementById('reg-estudiante').value;
+            const id_tipohoras = parseInt(document.getElementById('reg-tipo').value);
+            const numero_horas = parseInt(document.getElementById('reg-cantidad').value);
+            const descripcion = document.getElementById('reg-descripcion').value;
+
+            const payload = {
+                id_tipo: id_tipohoras, 
+                numero_horas,
+                descripcion
+            };
+
+            url = `${SUPABASE_URL}/rest/v1/horas`; 
+            method = 'POST';
+
+            if (id) {
+                url += `?id=eq.${id}`;
+                method = 'PATCH';
+            } else {
+                // Si el ID de tus estudiantes en Supabase es un número entero (int8), debemos convertirlo aquí:
+                payload.id_estudiante = parseInt(id_estudiante) || id_estudiante;
+                payload.fecha_hora = new Date().toISOString();
+            }
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: headers,
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    limpiarFormularioGestion();
+                    cargarRegistros();
+                    alert(id ? "Registro modificado con éxito." : "Registro agregado con éxito.");
+                } else {
+                    const errorData = await response.json();
+                    alert("Error de Supabase: " + (errorData.message || "Error desconocido"));
+                }
+            } catch (error) {
+                console.error("Error al guardar:", error);
+                alert("Ocurrió un error en el envío.");
+            }
+        });
+
+
+        // Cargar datos en el formulario para editar
+        window.prepararEditar = function(reg) {
+            document.getElementById('titulo-form-gestion').textContent = "Modificar Registro de Horas";
+            document.getElementById('reg-id').value = reg.id;
+            document.getElementById('reg-estudiante').value = reg.id_estudiante;
+            
+            document.getElementById('reg-estudiante').disabled = true;
+            
+            document.getElementById('reg-tipo').value = reg.id_tipo;
+            document.getElementById('reg-cantidad').value = reg.numero_horas;
+            document.getElementById('reg-descripcion').value = reg.descripcion;
+            
+            document.getElementById('btn-cancelar').classList.remove('hidden');
+            document.getElementById('btn-guardar').textContent = "Actualizar";
+        };
+
+        document.getElementById('btn-cancelar').addEventListener('click', limpiarFormularioGestion);
+
+        function limpiarFormularioGestion() {
+            document.getElementById('titulo-form-gestion').textContent = "Agregar Registro de Horas";
+            formRegistro.reset();
+            document.getElementById('reg-id').value = '';
+            
+            document.getElementById('reg-estudiante').disabled = false;
+            
+            document.getElementById('btn-cancelar').classList.add('hidden');
+            document.getElementById('btn-guardar').textContent = "Guardar";
+        }
+
+        // --- 7. ACCIONES DEL BUSCADOR ---
+        btnBuscar.addEventListener('click', () => cargarRegistros(inputBuscar.value.trim()));
+        inputBuscar.addEventListener('keypress', (e) => { if (e.key === 'Enter') cargarRegistros(inputBuscar.value.trim()); });
+        btnLimpiar.addEventListener('click', () => { inputBuscar.value = ''; cargarRegistros(); });
+    </script>
+</body>
+</html>
