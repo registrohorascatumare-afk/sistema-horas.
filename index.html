@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,9 +6,302 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Horas Sociales e Institucionales</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="min-h-screen font-sans text-gray-800" style="background: linear-gradient(90deg, #3b82f6 0%, #dbeafe 15%, #ffffff 40%); background-attachment: fixed;">
+    <style>
 
+body{
+
+    overflow-x:hidden;
+
+    background:
+    radial-gradient(circle at 15% 20%, rgba(59,130,246,.55), transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(96,165,250,.45), transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(191,219,254,.60), transparent 45%),
+    linear-gradient(
+        130deg,
+        #ffffff,
+        #e4f1ff,
+        #cfe8ff,
+        #ffffff
+    );
+
+   background-size:
+    250% 250%,
+    250% 250%,
+    250% 250%,
+    500% 500%;
+
+    animation:
+    blob1 12s ease-in-out infinite alternate,
+    blob2 16s ease-in-out infinite alternate,
+    blob3 20s ease-in-out infinite alternate,
+    fondo 12s ease infinite;
+
+}
+
+
+/* ===========================
+   BORDE BRILLANTE
+=========================== */
+
+.bg-white{
+    position:relative;
+    overflow:hidden;
+    animation:respirar 6s ease-in-out infinite;
+}
+
+.bg-white::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:inherit;
+    background:linear-gradient(120deg,#3b82f6,#60a5fa,#93c5fd,#3b82f6);
+    background-size:300% 300%;
+    animation:bordeGlow 6s linear infinite;
+    opacity:.35;
+    z-index:-1;
+}
+
+@keyframes bordeGlow{
+    from{background-position:0%;}
+    to{background-position:300%;}
+} 
+@keyframes fondo{
+
+    0%{
+        background-position:
+            0% 0%,
+            100% 0%,
+            50% 100%,
+            0% 50%;
+    }
+
+    50%{
+        background-position:
+            40% 20%,
+            60% 80%,
+            30% 40%,
+            100% 50%;
+    }
+
+    100%{
+        background-position:
+            0% 0%,
+            100% 0%,
+            50% 100%,
+            0% 50%;
+    }
+
+}
+
+@keyframes blob1{
+
+    from{
+        background-position:
+            0% 0%,
+            100% 0%,
+            50% 100%,
+            0% 50%;
+    }
+
+    to{
+        background-position:
+            25% 15%,
+            100% 0%,
+            50% 100%,
+            0% 50%;
+    }
+
+}
+
+@keyframes blob2{
+
+    from{
+        filter:hue-rotate(0deg);
+    }
+
+    to{
+        filter:hue-rotate(12deg);
+    }
+
+}
+
+@keyframes blob3{
+
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.02);
+    }
+
+}
+
+
+/* ===========================
+   BRILLO QUE RECORRE LA TARJETA
+=========================== */
+
+.bg-white::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:160px;
+    height:250%;
+
+    top:-70%;
+    left:-250px;
+
+    background:rgba(255,255,255,.18);
+
+    transform:rotate(25deg);
+
+    animation:brillo 8s linear infinite;
+
+    pointer-events:none;
+
+}
+
+@keyframes brillo{
+
+    0%{
+        left:-250px;
+    }
+
+    100%{
+        left:130%;
+    }
+
+}
+
+
+/* ===========================
+   RESPIRACIÓN DE TARJETAS
+=========================== */
+
+@keyframes respirar{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-5px);
+    }
+
+}
+
+
+/* ===========================
+   PARTÍCULAS (NO REEMPLAZA TU FONDO)
+=========================== */
+
+@keyframes particulas{
+
+    from{
+        filter:blur(80px) hue-rotate(0deg);
+    }
+
+    to{
+        filter:blur(90px) hue-rotate(45deg);
+    }
+
+}
+
+/* IMPORTANTE:
+   Solo agrega la segunda animación.
+   NO reemplaces tu body::after original.
+*/
+
+body::after{
+    animation:
+        blob2 18s ease-in-out infinite alternate,
+        particulas 25s linear infinite !important;
+}
+
+
+/* ===========================
+   BOTONES
+=========================== */
+
+button:hover{
+    transform:translateY(-5px) scale(1.04);
+    box-shadow:
+        0 15px 35px rgba(59,130,246,.35),
+        0 0 20px rgba(96,165,250,.4);
+}
+
+
+/* ===========================
+   TABLAS
+=========================== */
+
+tbody tr{
+    transition:.35s;
+}
+
+tbody tr:hover{
+    transform:translateX(8px) scale(1.01);
+}
+
+
+/* ===========================
+   INPUTS
+=========================== */
+
+input:focus,
+textarea:focus,
+select:focus{
+
+    transform:scale(1.02);
+
+    box-shadow:
+        0 0 0 2px rgba(59,130,246,.15),
+        0 0 30px rgba(59,130,246,.3);
+
+}
+
+
+/* ===========================
+   TÍTULOS
+=========================== */
+
+h1,h2,h3{
+    animation:titulo 5s ease-in-out infinite;
+}
+
+@keyframes titulo{
+
+    0%,100%{
+        text-shadow:none;
+    }
+
+    50%{
+        text-shadow:
+            0 0 10px #60a5fa,
+            0 0 20px #93c5fd;
+    }
+
+}
+
+        }
+
+        @keyframes oleajeFondo {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 0%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Fuerza a que las vistas se rendericen por encima del fondo animado */
+        #vista-login, #vista-dashboard {
+            position: relative;
+            z-index: 10;
+        }
+</style>
+</head>
+<body class="min-h-screen font-sans text-gray-800">
     <!-- VISTA DE LOGIN -->
     <div id="vista-login" class="flex items-center justify-center min-h-screen p-4">
         <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-blue-100/50 shadow-blue-900/5">
@@ -83,6 +377,46 @@
                     </div>
                 </form>
             </div>
+<!-- ================= NUEVA SECCIÓN: TABLERO DE ANUNCIOS ================= -->
+                
+            <!-- FORMULARIO CREAR ANUNCIO (Docentes/Admin) -->
+            <div id="modulo-crear-anuncio" class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-md border border-green-100 h-fit hidden">
+                <h3 class="text-lg font-black mb-5 text-gray-900 border-b border-gray-100 pb-2 flex items-center gap-2 text-green-700">
+                    📂 Publicar Actividad
+                </h3>
+                <form id="form-anuncio" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Título</label>
+                        <input type="text" id="anuncio-titulo" required class="block w-full rounded-xl bg-gray-50 border p-3 text-sm focus:outline-none focus:border-green-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Descripción</label>
+                        <textarea id="anuncio-descripcion" required rows="3" class="block w-full rounded-xl bg-gray-50 border p-3 text-sm focus:outline-none focus:border-green-500"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Cupos</label>
+                            <input type="number" id="anuncio-cupos" required min="1" value="5" class="block w-full rounded-xl bg-gray-50 border p-3 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Fecha</label>
+                            <input type="date" id="anuncio-fecha" required class="block w-full rounded-xl bg-gray-50 border p-3 text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-2">Lugar</label>
+                        <input type="text" id="anuncio-lugar" required class="block w-full rounded-xl bg-gray-50 border p-3 text-sm">
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white font-black p-3 rounded-xl hover:bg-green-700 text-sm">Publicar</button>
+                </form>
+            </div>
+
+            <!-- TABLERO DE ANUNCIOS -->
+            <div id="modulo-lista-anuncios" class="lg:col-span-2 w-full">
+                <h3 class="text-xl font-black mb-5 text-gray-900 flex items-center gap-2">📢 Convocatorias Disponibles</h3>
+                <div id="contenedor-anuncios" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+     
 
             <!-- MÓDULO DE BÚSQUEDA Y TABLA -->
             <div id="modulo-busqueda" class="lg:col-span-2 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-md border border-blue-100/50 w-full">
@@ -162,6 +496,10 @@
         const inputBuscar = document.getElementById('input-buscar');
         const btnBuscar = document.getElementById('btn-buscar');
         const btnLimpiar = document.getElementById('btn-limpiar');
+        const moduloCrearAnuncio = document.getElementById('modulo-crear-anuncio');
+const moduloListaAnuncios = document.getElementById('modulo-lista-anuncios');
+const formAnuncio = document.getElementById('form-anuncio');
+const contenedorAnuncios = document.getElementById('contenedor-anuncios');
 
         let url = "";
         let method = "";
@@ -246,7 +584,7 @@
                 btnBuscar.classList.remove('hidden');
                 btnLimpiar.classList.remove('hidden');
                 
-              tablaCuerpo.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">Ingrese el ID de un estudiante en el buscador para ver sus registros.</td></tr>`;
+                cargarRegistros(); // Carga el historial completo
             } else {
                 // 🔐 SEGURIDAD: Si es Estudiante (Rol 3)
                 moduloGestion.classList.add('hidden');
@@ -441,6 +779,152 @@
         btnBuscar.addEventListener('click', () => cargarRegistros(inputBuscar.value.trim()));
         inputBuscar.addEventListener('keypress', (e) => { if (e.key === 'Enter') cargarRegistros(inputBuscar.value.trim()); });
         btnLimpiar.addEventListener('click', () => { inputBuscar.value = ''; cargarRegistros(); });
+
+//8. TABLA DE ANUNCIOS----
+
+            function inicializarDashboard() {
+            vistaLogin.classList.add('hidden');
+            vistaDashboard.classList.remove('hidden');
+            
+            userDisplay.textContent = usuarioActual;
+            roleDisplay.textContent = nombreRolActual;
+
+            const campoConexion = document.getElementById('conexion-display');
+            if (campoConexion) {
+                campoConexion.textContent = new Date().toLocaleString();
+            }
+
+            if (idRolActual === 1 || idRolActual === 2) {
+                moduloGestion.classList.remove('hidden');
+                thAcciones.classList.remove('hidden');
+                moduloBusqueda.classList.remove('lg:col-span-3');
+                moduloBusqueda.classList.add('lg:col-span-2');
+                
+                inputBuscar.disabled = false;
+                inputBuscar.value = '';
+                btnBuscar.classList.remove('hidden');
+                btnLimpiar.classList.remove('hidden');
+
+                // Mostrar panel de creación a profesores/admin
+                moduloCrearAnuncio.classList.remove('hidden');
+                moduloListaAnuncios.classList.remove('lg:col-span-3');
+                moduloListaAnuncios.classList.add('lg:col-span-2');
+                
+                cargarRegistros(); 
+            } else {
+                moduloGestion.classList.add('hidden');
+                thAcciones.classList.add('hidden');
+                moduloBusqueda.classList.remove('lg:col-span-2');
+                moduloBusqueda.classList.add('lg:col-span-3');
+                
+                inputBuscar.value = idEstudianteAsociado || '';
+                inputBuscar.disabled = true; 
+                
+                btnBuscar.classList.add('hidden');
+                btnLimpiar.classList.add('hidden');
+
+                // Expandir lista completa para estudiantes
+                moduloCrearAnuncio.classList.add('hidden');
+                moduloListaAnuncios.classList.remove('lg:col-span-2');
+                moduloListaAnuncios.classList.add('lg:col-span-3');
+                
+                cargarRegistros(idEstudianteAsociado); 
+            }
+            // Ejecutar la carga del tablero
+            cargarAnuncios();
+        }
+        // --- MOTOR DEL TABLERO DE ANUNCIOS ---
+        formAnuncio.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                titulo: document.getElementById('anuncio-titulo').value,
+                descripcion: document.getElementById('anuncio-descripcion').value,
+                cupos_totales: parseInt(document.getElementById('anuncio-cupos').value),
+                fecha_evento: document.getElementById('anuncio-fecha').value,
+                lugar: document.getElementById('anuncio-lugar').value,
+                creado_por: usuarioActual
+            };
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/anuncios`, {
+                    method: 'POST', headers: headers, body: JSON.stringify(payload)
+                });
+                if (response.ok) {
+                    formAnuncio.reset();
+                    alert("¡Anuncio publicado!");
+                    cargarAnuncios();
+                }
+            } catch (error) { console.error(error); }
+        });
+
+        async function cargarAnuncios() {
+            const divContenedor = document.getElementById('contenedor-anuncios');
+            if(!divContenedor) return;
+            divContenedor.innerHTML = '<p class="text-xs text-gray-500">Cargando...</p>';
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/anuncios?select=*,inscripciones_anuncios(*)&order=fecha_evento.asc`, { method: 'GET', headers: headers });
+                const anuncios = await res.json();
+                divContenedor.innerHTML = '';
+                
+                anuncios.forEach(anuncio => {
+                    const inscritos = anuncio.inscripciones_anuncios || [];
+                    const cuposDisponibles = anuncio.cupos_totales - inscritos.length;
+                    const yaInscrito = inscritos.some(ins => ins.id_estudiante == idEstudianteAsociado);
+                    const tarjeta = document.createElement('div');
+                    tarjeta.className = "bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between";
+                    
+                    let badge = `<span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-0.5 rounded">Cupos: ${inscritos.length}/${anuncio.cupos_totales}</span>`;
+                    if (cuposDisponibles <= 0) badge = `<span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-0.5 rounded">Completo</span>`;
+
+                    let btn = '';
+                    if (idRolActual === 3) {
+                        if (yaInscrito) {
+                            btn = `<button onclick="cancelarInscripcion(${anuncio.id})" class="mt-3 w-full bg-red-100 text-red-700 font-bold p-2 rounded-xl text-xs">Cancelar Reserva</button>`;
+                        } else if (cuposDisponibles > 0) {
+                            btn = `<button onclick="inscribirEstudiante(${anuncio.id})" class="mt-3 w-full bg-blue-600 text-white font-bold p-2 rounded-xl text-xs">Inscribirme</button>`;
+                        } else {
+                            btn = `<button disabled class="mt-3 w-full bg-gray-100 text-gray-400 p-2 rounded-xl text-xs cursor-not-allowed">Agotado</button>`;
+                        }
+                    } else {
+                        btn = `<div class="mt-3 pt-2 border-t text-[11px] text-gray-500">
+                                <b>Lista:</b> ${inscritos.map(i => i.id_estudiante).join(', ') || 'Ninguno'}
+                               <button onclick="eliminarAnuncio(${anuncio.id})" class="block mt-2 text-red-500 hover:underline">Eliminar Convocatoria</button>
+                               </div>`;
+                    }
+
+                    tarjeta.innerHTML = `<div><div class="flex justify-between items-start mb-2"><h4 class="font-bold text-gray-900">${anuncio.titulo}</h4>${badge}</div>
+                    <p class="text-xs text-gray-600 mb-2">${anuncio.descripcion}</p>
+                    <p class="text-[11px] text-gray-400">📅 ${anuncio.fecha_evento} | 📍 ${anuncio.lugar}</p></div>${btn}`;
+                    divContenedor.appendChild(tarjeta);
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        window.inscribirEstudiante = async function(id) {
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/inscripciones_anuncios`, {
+                    method: 'POST', headers: headers, body: JSON.stringify({ anuncio_id: id, id_estudiante: idEstudianteAsociado.toString() })
+                });
+                if(res.ok) { alert("Inscrito correctamente"); cargarAnuncios(); }
+            } catch (e) { console.error(e); }
+        };
+
+        window.cancelarInscripcion = async function(id) {
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/inscripciones_anuncios?anuncio_id=eq.${id}&id_estudiante=eq.${idEstudianteAsociado}`, { method: 'DELETE', headers: headers });
+                if(res.ok) { alert("Reserva cancelada"); cargarAnuncios(); }
+            } catch (e) { console.error(e); }
+        };
+
+        window.eliminarAnuncio = async function(id) {
+            if(!confirm("¿Eliminar este anuncio?")) return;
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/anuncios?id=eq.${id}`, { method: 'DELETE', headers: headers });
+                if(res.ok) cargarAnuncios();
+            } catch (e) { console.error(e); }
+        };
+
+
+
     </script>
 </body>
 </html>
